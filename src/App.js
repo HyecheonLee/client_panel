@@ -6,6 +6,7 @@ import Dashboard from "./components/layout/Dashboard";
 import {Provider} from 'react-redux';
 import store from "./store";
 import AddClient from "./components/clients/AddClient";
+import ClientDetails from "./components/clients/ClientDetails";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <div className="container">
             <Switch>
               <Route exact path="/" component={Dashboard}/>
+              <Route exact path="/client/detail/:id" component={ClientDetails}/>
               <Route exact path="/client/add" component={AddClient}/>
             </Switch>
           </div>
