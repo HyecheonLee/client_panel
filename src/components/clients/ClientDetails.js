@@ -9,42 +9,54 @@ import classnames from 'classnames';
 
 class ClientDetails extends Component {
   state = {
-    id: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    balance: '',
+    showBalanceUpdate: false,
+    balanceUpdateAmount: ''
   };
-
-  static getDerivedStateFromProps(props, state) {
-    const {client} = props;
-    if (client) {
-      //Add balance
-      return {...client};
-    }
-    return null;
-  };
-
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
-  onSubmit = (e) => {
+  balanceSubmit = e => {
     e.preventDefault();
-    const newClient = this.state;
-    const {firestore, history} = this.props;
-    if (newClient.balance === '') {
-      newClient.balance = 0;
-    }
-    firestore
-      .add({collection: 'clients'}, newClient)
-      .then(() => history.push("/"));
+    const {client, firestore} = this.props;
+    const {balanceUpdateAmount} = this.state;
+    const clientUpdate = {
+      balance: parseFloat(balanceUpdateAmount)
+    };
+
+    firestore.update({collection: 'clients', doc: client.id}, clientUpdate);
+
   };
+  onDeleteClick = (e) => {
+    const {client, firestore, history} = this.props;
+    firestore
+      .delete({collection: 'clients', doc: client.id})
+      .then(history.push('/'));
+  };
+
+  onChange = e => this.setState({[e.target.name]: e.target.value});
 
   render() {
     const {client} = this.props;
+    const {showBalanceUpdate, balanceUpdateAmount} = this.state;
+    let balanceForm = '';
+    // If balance form should display
+    if (showBalanceUpdate) {
+      balanceForm = (
+        <form onSubmit={this.balanceSubmit}>
+          <div className="input-group">
+            <input type="text"
+                   className="form-control"
+                   name="balanceUpdateAmount"
+                   placeholder="Add New Balance"
+                   value={balanceUpdateAmount}
+                   onChange={this.onChange}
+            />
+            <div className="input-group-append">
+              <input type="submit" value="update" className="btn btn-outline-dark"/>
+            </div>
+          </div>
+        </form>
+      )
+    } else {
+      balanceForm = null;
+    }
     if (client) {
       return (
         <div>
@@ -58,9 +70,9 @@ class ClientDetails extends Component {
               <Link to={`/client/edit/${client.id}`} className="btn btn-dark">
                 <i className="fas fa-arrow-circle-left"/> Edit
               </Link>
-              <div className="btn btn-danger">
+              <button onClick={this.onDeleteClick} className="btn btn-danger">
                 Delete
-              </div>
+              </button>
             </div>
           </div>
           <hr/>
@@ -84,7 +96,16 @@ class ClientDetails extends Component {
                   })}>
                     ${parseFloat(client.balance).toFixed(2)}
                   </span>
+                    {' '}
+                    <small>
+                      <a href="#!"
+                         onClick={() =>
+                           this.setState({showBalanceUpdate: !this.state.showBalanceUpdate})}>
+                        <i className="fas fa-pencil-alt"/>
+                      </a>
+                    </small>
                   </h3>
+                  {balanceForm}
                 </div>
               </div>
               <hr/>
