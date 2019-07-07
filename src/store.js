@@ -3,16 +3,9 @@ import firebase from 'firebase';
 import 'firebase/storage' // <- needed if using storage
 import {firebaseReducer, reactReduxFirebase} from "react-redux-firebase";
 import {firestoreReducer, reduxFirestore} from "redux-firestore";
+import {firebaseConfig} from "./firebaseConfig";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAukAv9CfiQ5xpfdHIEfSfymVUnMpoxOiE",
-  authDomain: "reactclientpanel-1f47f.firebaseapp.com",
-  databaseURL: "https://reactclientpanel-1f47f.firebaseio.com",
-  projectId: "reactclientpanel-1f47f",
-  storageBucket: "reactclientpanel-1f47f.appspot.com",
-  messagingSenderId: "14332876136",
-  appId: "1:14332876136:web:9c65a0d9bbfb39c4"
-};
+
 // react-redux-firebase config
 const rrfConfig = {
   userProfile: "users",
