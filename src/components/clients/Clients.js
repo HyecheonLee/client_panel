@@ -72,7 +72,7 @@ class Clients extends Component {
         </div>
       );
     } else {
-      return Spinner
+      return <Spinner/>
     }
   }
 }
