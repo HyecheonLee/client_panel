@@ -1,8 +1,6 @@
-import React, { Component } from "react";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
-import { firebaseConnect } from "react-redux-firebase";
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import {firebaseConnect} from "react-redux-firebase";
 
 class Login extends Component {
   state = {
