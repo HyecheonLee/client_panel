@@ -23,7 +23,7 @@ class AppNavbar extends Component {
     e.preventDefault();
     const {firebase} = this.props;
     firebase.logout();
-    
+
   };
 
   render() {
