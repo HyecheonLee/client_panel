@@ -1,4 +1,4 @@
-import {ALLOW_REGISTRATION, DISABLE_BALANCE_ON_ADD, DISABLE_BALANCE_ON_EDIT} from "./types";
+import {ALLOW_REGISTRATION, DISABLE_BALANCE_ON_ADD, DISABLE_BALANCE_ON_EDIT} from "../actions/types";
 
 const initialState = {
   disableBalanceOnAdd: true,
