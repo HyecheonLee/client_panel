@@ -11,6 +11,7 @@ import EditClient from "./components/clients/EditClient";
 import {UserIsAuthenticated, UserIsNotAuthenticated} from "./helper/auth";
 import Settings from "./components/setting/Settings";
 import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route exact path="/client/edit/:id" component={UserIsAuthenticated(EditClient)}/>
               <Route exact path="/client/:id" component={UserIsAuthenticated(ClientDetails)}/>
               <Route exact path="/login" component={UserIsNotAuthenticated(Login)}/>
+              <Route exact path="/register" component={UserIsNotAuthenticated(Register)}/>
               <Route exact path="/settings" component={UserIsAuthenticated(Settings)}/>
             </Switch>
           </div>
