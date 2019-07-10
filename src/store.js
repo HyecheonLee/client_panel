@@ -32,17 +32,31 @@ const rootReducer = combineReducers({
   firebase: firebaseReducer,
   firestore: firestoreReducer, // <- needed if using firestore
   notify: notifyReducer,
-  settings:settingsReducer,
+  settings: settingsReducer,
 });
 
+//check for settings in localStorage
+if (localStorage.getItem("settings") == null) {
+  // Default settings
+  const defaultSettings = {
+    disableBalanceOnAdd: true,
+    disableBalanceOnEdit: false,
+    allowRegistration: false,
+  };
+  // Set to localStorage
+  localStorage.setItem('settings', JSON.stringify(defaultSettings));
+}
 // Create initial state
-
 // Create store with reducers and initial state
-const initialState = {};
-const store = createStoreWithFirebase(rootReducer, initialState, compose(
-  reactReduxFirebase(firebase),
-  applyMiddleware(ReduxThunk),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-));
+const initialState = {settings: JSON.parse(localStorage.getItem("settings"))};
+
+const store = createStoreWithFirebase(
+  rootReducer,
+  initialState,
+  compose(
+    reactReduxFirebase(firebase),
+    applyMiddleware(ReduxThunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  ));
 
 export default store;
